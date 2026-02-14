@@ -1,4 +1,4 @@
-import { Deck, newDeck, Rouler, Sprinteur } from './deck'
+import { Deck, newDeck, Rouler, Sprinteur } from './deck.js'
 
 type Color = 'red' | 'black' | 'green' | 'blue'
 
@@ -15,8 +15,8 @@ function newPlayer(color: Color): Player {
     color,
     decks: {
       rouler: newDeck<Rouler>(3, 4, 5, 6, 7),
-      sprinteur: newDeck<Sprinteur>(2, 3, 4, 5, 9)
-    }
+      sprinteur: newDeck<Sprinteur>(2, 3, 4, 5, 9),
+    },
   }
 }
 

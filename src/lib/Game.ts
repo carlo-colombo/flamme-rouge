@@ -1,5 +1,5 @@
-import { Card } from './deck'
-import { Player } from './player'
+import { Card } from './deck.js'
+import { Player } from './player.js'
 
 import { typestate } from 'typestate'
 
@@ -17,19 +17,17 @@ interface Square {
 }
 
 type PlayersCount =
-  | [Player, Player]
-  | [Player, Player, Player]
-  | [Player, Player, Player, Player]
+  | readonly [Player, Player]
+  | readonly [Player, Player, Player]
+  | readonly [Player, Player, Player, Player]
 
 enum Phase {
   Setup,
   Energy,
   Movement,
   EndPhas,
-  Finished
+  Finished,
 }
-
-const fsm = new typestate.FiniteStateMachine<Phase>(Phase.Setup)
 
 interface Game {
   readonly players: PlayersCount
