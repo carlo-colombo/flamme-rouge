@@ -3,7 +3,7 @@ type Sprinteur = 2 | 3 | 4 | 5 | 9
 type Fatigue = 2
 
 type Card = Rouler | Sprinteur | Fatigue
-type Cards<T extends Rouler | Sprinteur> = [T, T, T, T, T]
+type Cards<T extends Rouler | Sprinteur> = readonly [T, T, T, T, T]
 
 interface Deck {
   readonly cards: ReadonlyArray<Card>
@@ -17,49 +17,49 @@ function shuffle(cards: ReadonlyArray<Card>): ReadonlyArray<Card> {
 function newDeck<T extends Rouler | Sprinteur>(...cards: Cards<T>): Deck {
   return {
     cards: shuffle([...cards, ...cards, ...cards]),
-    recycled: []
+    recycled: [],
   }
 }
 
-function draw(deck: Deck): [Deck, ReadonlyArray<Card>] {
+function draw(deck: Deck): readonly [Deck, ReadonlyArray<Card>] {
   const { recycled, cards } = deck
   return cards.length === 0 && recycled.length === 0
     ? [{ recycled, cards }, [2]]
     : cards.length < 4
-      ? _draw({ cards: [], ...deck }, cards)
+      ? _draw({ ...deck, cards: [] }, cards)
       : [
           {
             ...deck,
-            cards: deck.cards.slice(4)
+            cards: deck.cards.slice(4),
           },
-          deck.cards.slice(0, 4)
+          deck.cards.slice(0, 4),
         ]
 }
 
 function _draw(
   deck: Deck,
-  drawnCards: ReadonlyArray<Card>
-): [Deck, ReadonlyArray<Card>] {
+  drawnCards: ReadonlyArray<Card>,
+): readonly [Deck, ReadonlyArray<Card>] {
   return [
     {
       cards: shuffle(deck.recycled.slice(4 - drawnCards.length)),
-      recycled: []
+      recycled: [],
     },
-    [...drawnCards, ...deck.recycled.slice(0, 4 - drawnCards.length)]
+    [...drawnCards, ...deck.recycled.slice(0, 4 - drawnCards.length)],
   ]
 }
 
 function recycle(deck: Deck, cards: ReadonlyArray<Card>): Deck {
   return {
     ...deck,
-    recycled: deck.recycled.concat(cards)
+    recycled: deck.recycled.concat(cards),
   }
 }
 
 function addFatigue(deck: Deck): Deck {
   return {
     ...deck,
-    recycled: deck.recycled.concat(2)
+    recycled: deck.recycled.concat(2),
   }
 }
 

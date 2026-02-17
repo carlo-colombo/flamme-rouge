@@ -1,21 +1,20 @@
-// tslint:disable:no-expression-statement
-import { addFatigue, draw, newDeck, recycle, Rouler } from './deck'
+import { addFatigue, draw, newDeck, recycle, Rouler } from './deck.js'
 
 describe('deck', () => {
   describe('addFatigue', () => {
     it('add a card of value 2 to the recycled', () => {
       expect(addFatigue({ cards: [], recycled: [] })).toEqual({
         cards: [],
-        recycled: [2]
+        recycled: [2],
       })
     })
   })
-  
+
   describe('recycle', () => {
     it('puts card in the recycled', () => {
       expect(recycle({ cards: [], recycled: [2] }, [3, 4, 5])).toEqual({
         cards: [],
-        recycled: [2, 3, 4, 5]
+        recycled: [2, 3, 4, 5],
       })
     })
   })
@@ -64,8 +63,8 @@ describe('deck', () => {
 
         expect(deck.recycled).toEqual([])
         expect(deck.cards.length).toEqual(1)
-        expect([5,6].includes(deck.cards[0])).toBeTruthy()
-        
+        expect([5, 6].includes(deck.cards[0])).toBeTruthy()
+
         expect(deck.cards.concat(cards).sort()).toEqual([2, 3, 4, 5, 6])
       })
     })
